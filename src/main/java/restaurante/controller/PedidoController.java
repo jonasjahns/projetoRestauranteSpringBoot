@@ -94,8 +94,8 @@ public class PedidoController {
 		for (ValorPedido valorPedido : pedido.getValores()) {
 			LancamentoEstoque lancamentoEstoque = new LancamentoEstoque();
 			lancamentoEstoque.setData(dataAtual);
-			lancamentoEstoque.setValor((new Double(valorPedido.getValor())));
-			lancamentoEstoque.setQuantidade(1D);
+			lancamentoEstoque.setValor(1D);
+			lancamentoEstoque.setQuantidade((new Double(valorPedido.getValor())));
 			lancamentoEstoque.setTipo(tipoLancamentoEstoqueService.getByCodigo(52));
 			registroEstoqueService.adicionarLancamento(lancamentoEstoque, valorPedido.getIngrediente(),
 					valorPedido.getMedida());

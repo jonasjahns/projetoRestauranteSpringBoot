@@ -36,12 +36,12 @@ public class RegistroEstoqueService {
 	}
 
 	public List<RegistroEstoque> registroPorIngrediente(Ingrediente ingrediente) {
-		return registroEstoqueDao.findByOrderByValidadeAscIngrediente_Id(ingrediente.getId());
+		return registroEstoqueDao.findPorIngrediente(ingrediente.getId());
 	}
 
 	public void adicionarLancamento(LancamentoEstoque lancamentoEstoque, Ingrediente ingrediente, Medida medida) {
 		List<RegistroEstoque> registrosEstoque = registroPorIngrediente(ingrediente);
-		Double taxa;
+		Double taxa = 1D;
 		Double inseridos = 0D;
 		for (RegistroEstoque registroEstoque : registrosEstoque) {
 			taxa = conversorMedidasService.fatorConversao(medida, registroEstoque.getMedida());
@@ -49,6 +49,7 @@ public class RegistroEstoqueService {
 				lancamentoEstoque.setQuantidade(lancamentoEstoque.getQuantidade() * taxa);
 				registroEstoque.adicionarLancamento(lancamentoEstoque);
 				inseridos = lancamentoEstoque.getQuantidade();
+				registroEstoqueDao.save(registroEstoque);
 			} else if (inseridos < lancamentoEstoque.getQuantidade()) {
 				LancamentoEstoque novoLancamento = new LancamentoEstoque();
 				novoLancamento.setData(lancamentoEstoque.getData());
@@ -57,6 +58,7 @@ public class RegistroEstoqueService {
 				novoLancamento.setQuantidade(registroEstoque.getDisponiveis() * taxa - inseridos);
 				registroEstoque.adicionarLancamento(novoLancamento);
 				inseridos += novoLancamento.getQuantidade();
+				registroEstoqueDao.save(registroEstoque);
 			}
 		}
 	}

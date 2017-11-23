@@ -8,6 +8,7 @@ import restaurante.model.TipoLancamentoEstoque;
 
 @RepositoryRestResource
 public interface TipoLancamentoEstoqueDao extends CrudRepository<TipoLancamentoEstoque, Integer> {
-	@Query
+	
+	@Query 
 	public TipoLancamentoEstoque findByCodigo(Integer codigo);
 }

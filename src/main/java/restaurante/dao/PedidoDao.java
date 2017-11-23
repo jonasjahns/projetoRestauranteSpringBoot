@@ -27,4 +27,7 @@ public interface PedidoDao extends CrudRepository<Pedido, Integer> {
 	
 	@Query
 	public List<Pedido> findByDataAndStatus(Date data, Integer status);
+	
+	@Query
+	public List<Pedido> findByUsuarioAndDataBetween(Usuario usuario, Date dataDe, Date dataAte);
 }

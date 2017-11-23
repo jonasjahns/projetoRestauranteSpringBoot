@@ -30,15 +30,15 @@
 								<td>${user.firstName}</td>
 								<td>${user.lastName}</td>
 								<td>${user.email}</td>
-								<td>${user.CPF}</td>
+								<td>${user.cpf}</td>
 								<c:forEach items="${user.usuarioProfile}" var="profile">
 									<td>${profile.tipo}</td>
 								</c:forEach>
 								<sec:authorize access="hasRole('ADMIN')">
 									<td><a
-										href="<c:url value='/usuario/deletar/${user.CPF}' />"
+										href="<c:url value='/usuario/deletar/${user.cpf}' />"
 										class="btn btn-danger w-80 float-right ml-1">Deletar</a> <a
-										href="<c:url value='/usuario/editar/${user.CPF}' />"
+										href="<c:url value='/usuario/editar/${user.cpf}' />"
 										class="btn btn-success w-80 float-right ml-1">Editar</a></td>
 								</sec:authorize>
 							</tr>

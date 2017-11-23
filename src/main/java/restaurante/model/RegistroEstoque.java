@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -41,7 +42,7 @@ public class RegistroEstoque {
 	@Column
 	private Double quantidadeComprada;
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "LANCAMENTOS_ESTOQUES_ID", referencedColumnName = "ID", foreignKey = @ForeignKey(name = "REGISTRO_LANCAMENTO_FK"))
 	private List<LancamentoEstoque> lancamentos;
 
@@ -178,13 +179,13 @@ public class RegistroEstoque {
 
 	public Double getDisponiveis() {
 		Double consumidos = this.getConsumidos();
-		return (this.quantidadeComprada - consumidos);
+		return (this.quantidadeComprada + consumidos);
 	}
 
 	public Double getConsumidos() {
 		Double soma = 0D;
 		for (LancamentoEstoque lancamento : this.lancamentos) {
-			soma = soma + lancamento.getQuantidade();
+			soma = soma - lancamento.getQuantidade();
 		}
 		return soma;
 	}

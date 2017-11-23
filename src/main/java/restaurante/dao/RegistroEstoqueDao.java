@@ -11,7 +11,7 @@ import restaurante.model.RegistroEstoque;
 @RepositoryRestResource
 public interface RegistroEstoqueDao extends CrudRepository<RegistroEstoque, Integer> {
 
-	@Query
-	public List<RegistroEstoque> findByOrderByValidadeAscIngrediente_Id(Integer ingredienteId);
+	@Query (value="select * from REGISTROS_ESTOQUES t where t.ingrediente_id= ?1 order by validade asc", nativeQuery = true)
+	public List<RegistroEstoque> findPorIngrediente(Integer ingredienteId);
 
 }

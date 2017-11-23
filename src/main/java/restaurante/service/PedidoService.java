@@ -50,4 +50,8 @@ public class PedidoService {
 	public List<Pedido> findByDataAndStatus(Date data, Integer status) {
 		return pedidoDao.findByDataAndStatus(data, status);
 	}
+
+	public List<Pedido> findByUsuarioAndDataAfterAndDataBefore(Usuario usuario, Date dataDe, Date dataAte) {
+		return pedidoDao.findByUsuarioAndDataBetween(usuario, dataDe, dataAte);
+	}
 }

@@ -1,5 +1,7 @@
 package restaurante.model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -75,7 +77,11 @@ public class Pedido {
 			resultado = "Finalizado";
 			break;
 		case 5:
-			resultado = "Cancelado";
+			resultado = "Cancelado Usuario";
+			break;
+		case 6:
+			resultado = "Cancelado Funcionário";
+			break;
 		default:
 			resultado = "";
 			break;
@@ -200,6 +206,12 @@ public class Pedido {
 
 	public Date getHora() {
 		return hora;
+	}
+	
+	public String getDataFormatada()
+	{
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		return df.format(this.data);
 	}
 
 	public void setHora(Date hora) {

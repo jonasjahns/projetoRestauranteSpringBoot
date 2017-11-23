@@ -68,7 +68,7 @@ public class LancamentoEstoque {
 	}
 
 	public void setQuantidade(Double quantidade) {
-		this.quantidade = quantidade;
+		this.quantidade = Math.abs(quantidade);
 	}
 
 	public void setTipo(TipoLancamentoEstoque tipo) {
