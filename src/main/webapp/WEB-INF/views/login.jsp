@@ -12,7 +12,7 @@
 		<div class="login-container">
 			<div class="login-card">
 				<div class="login-form">
-					<c:url var="loginUrl" value="/usuario/login" />
+					<c:url var="loginUrl" value="/login" />
 					<form action="${loginUrl}" method="post" class="form-horizontal">
 						<c:if test="${param.error != null}">
 							<div class="alert alert-danger">

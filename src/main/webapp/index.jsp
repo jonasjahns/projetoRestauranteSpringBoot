@@ -10,11 +10,11 @@
 </head>
 <body>
 	<div class="generic-container">
-		<%@include file="WEB-INF/views/parts/header.jsp"%>
+		<%@include file="WEB-INF/views/parts/authheader.jsp"%>
 		<br />
 		<div class="table-responsive">
 			<table class="table table-hover table-bordered">
-				<thead>
+				<thead class="thead-inverse">
 					<tr>
 						<th>Módulos</th>
 						<th></th>

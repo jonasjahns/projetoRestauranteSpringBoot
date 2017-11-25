@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.authentication.AuthenticationTrustResolverImpl;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -17,28 +17,21 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	@Qualifier("customUserDetailsService")
 	UserDetailsService userDetailsService;
 
-	@Autowired
-	public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService);
-		auth.authenticationProvider(authenticationProvider());
-	}
-
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/", "/list")
-				.access("hasRole('USER') or hasRole('ADMIN') or hasRole('DBA')")
+		http.authorizeRequests().antMatchers("/", "Boot/",  "/Boot/", "/Boot/cadastros/", "/cadastros/**" , "/cadastros").authenticated()
 				.antMatchers("/newuser/**", "/delete-user-*").access("hasRole('ADMIN')")
 				.antMatchers("/receitaGrupo/listar/medidas").permitAll().antMatchers("/edit-user-*")
-				.access("hasRole('ADMIN') or hasRole('DBA')").and().formLogin().loginPage("/usuario/login")
-				.loginProcessingUrl("/usuario/login").usernameParameter("ssoId").passwordParameter("password").and()
-				.rememberMe().rememberMeParameter("remember-me").tokenValiditySeconds(86400).and().csrf().and()
-				.exceptionHandling().accessDeniedPage("/negado");
+				.access("hasRole('ADMIN') or hasRole('DBA')").and().formLogin().loginPage("/login")
+				.loginProcessingUrl("/login").usernameParameter("ssoId").passwordParameter("password").and().csrf()
+				.and().exceptionHandling().accessDeniedPage("/negado");
 	}
 
 	@Bean

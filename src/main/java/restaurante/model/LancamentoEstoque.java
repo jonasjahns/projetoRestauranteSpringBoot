@@ -1,5 +1,7 @@
 package restaurante.model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -23,16 +25,16 @@ public class LancamentoEstoque {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LANCAMENTOS_ESTOQUES_SEQUENCE")
 	@Column
 	private Integer id;
-	
+
 	@Column
 	private Double quantidade;
-	
-	@ManyToOne 
+
+	@ManyToOne
 	private TipoLancamentoEstoque tipo;
-	
+
 	@Column
 	private Double valor;
-	
+
 	@Column
 	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	@Temporal(TemporalType.DATE)
@@ -44,11 +46,14 @@ public class LancamentoEstoque {
 
 	public Double getQuantidade() {
 		Double sinal = 1D;
-		if (this.getTipo().getCodigo() >= 50)
-		{
+		if (this.getTipo().getCodigo() >= 50) {
 			sinal = -1D;
 		}
-		return (quantidade*sinal);
+		return (quantidade * sinal);
+	}
+
+	public Double getQuantidadeAbs() {
+		return Math.abs(this.quantidade);
 	}
 
 	public TipoLancamentoEstoque getTipo() {
@@ -61,6 +66,11 @@ public class LancamentoEstoque {
 
 	public Date getData() {
 		return data;
+	}
+
+	public String getDataFormatada() {
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		return df.format(this.data);
 	}
 
 	public void setId(Integer id) {

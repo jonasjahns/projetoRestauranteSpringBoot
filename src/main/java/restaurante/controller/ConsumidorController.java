@@ -1,8 +1,10 @@
 package restaurante.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -47,7 +49,7 @@ public class ConsumidorController {
 		Calendar cal = Calendar.getInstance();
 		Date primeiroDia = new Date();
 		cal.setTime(primeiroDia);
-		cal.set(primeiroDia.getYear(), primeiroDia.getMonth(), 1);
+		cal.set(cal.get(cal.YEAR), cal.get(cal.MONTH), 1);
 		model.addAttribute("pedidos",
 				pedidoService.findByUsuarioAndDataAfterAndDataBefore(getUsuario(), cal.getTime(), new Date()));
 		RangeDatas rangeDatas = new RangeDatas(cal.getTime(), new Date());
@@ -62,8 +64,10 @@ public class ConsumidorController {
 		if (resultado.hasErrors()) {
 			System.out.println(resultado.toString());
 		}
-		model.addAttribute("pedidos", pedidoService.findByUsuarioAndDataAfterAndDataBefore(getUsuario(),
-				rangeDatas.dataDe, rangeDatas.dataAte));
+		List<Pedido> pedidos = new ArrayList<Pedido>();
+		pedidos.addAll(pedidoService.findByUsuarioAndDataAfterAndDataBefore(getUsuario(), rangeDatas.dataDe,
+				rangeDatas.dataAte));
+		model.addAttribute("pedidos", pedidos);
 		model.addAttribute("rangedatas", rangeDatas);
 		model.addAttribute("loggedinuser", getPrincipal());
 		model.addAttribute("usuario", getUsuario());

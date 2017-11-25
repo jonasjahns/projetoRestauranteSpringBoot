@@ -33,7 +33,7 @@
 						<td>${registroEstoque.valor}</td>
 						<td>${registroEstoque.dataValidade}</td>
 						<td><a
-							href="<c:url value='/estoque/lancamentos-${registroEstoque.id}' />">deletar</a></td>
+							href="<c:url value='/estoque/lancamentos-${registroEstoque.id}' />">Listar</a></td>
 						<td><a
 							href="<c:url value='/estoque/deletar-${registroEstoque.id}' />">deletar</a></td>
 					</tr>
