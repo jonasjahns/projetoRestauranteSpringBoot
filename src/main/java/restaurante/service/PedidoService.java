@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import restaurante.dao.PedidoDao;
@@ -51,6 +52,7 @@ public class PedidoService {
 		return pedidoDao.findByDataAndStatus(data, status);
 	}
 
+	@Cacheable("pedidos")
 	public List<Pedido> findByUsuarioAndDataAfterAndDataBefore(Usuario usuario, Date dataDe, Date dataAte) {
 		return pedidoDao.findByUsuarioAndDataBetween(usuario, dataDe, dataAte);
 	}

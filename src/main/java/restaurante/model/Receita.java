@@ -14,8 +14,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import restaurante.controller.ReceitaGrupo;
-
 
 @Entity
 @Table(name = "RECEITAS")

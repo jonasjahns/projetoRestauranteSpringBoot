@@ -1,4 +1,4 @@
-package restaurante.controller;
+package restaurante.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +16,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import restaurante.model.Grupo;
-import restaurante.model.Medida;
 
 @Entity
 @Table(name = "RECEITAS_GRUPOS")

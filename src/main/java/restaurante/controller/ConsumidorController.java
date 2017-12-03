@@ -28,7 +28,7 @@ import restaurante.service.PedidoService;
 import restaurante.service.UsuarioService;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/home/")
 public class ConsumidorController {
 
 	@Autowired
@@ -37,7 +37,7 @@ public class ConsumidorController {
 	@Autowired
 	PedidoService pedidoService;
 
-	@RequestMapping(value = { "/home", "/home/" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public String meusServicos(ModelMap model) {
 		model.addAttribute("loggedinuser", getPrincipal());
 		model.addAttribute("usuario", getUsuario());
@@ -49,7 +49,7 @@ public class ConsumidorController {
 		Calendar cal = Calendar.getInstance();
 		Date primeiroDia = new Date();
 		cal.setTime(primeiroDia);
-		cal.set(cal.get(cal.YEAR), cal.get(cal.MONTH), 1);
+		cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), 1);
 		model.addAttribute("pedidos",
 				pedidoService.findByUsuarioAndDataAfterAndDataBefore(getUsuario(), cal.getTime(), new Date()));
 		RangeDatas rangeDatas = new RangeDatas(cal.getTime(), new Date());

@@ -34,7 +34,7 @@
 											$
 													.ajax({
 														type : "GET",
-														url : "http://localhost:8081/ProjetoRestaurante/receitagrupo/listar/medidas",
+														url : "http://localhost:8081/Boot/receitagrupo/listar/medidas",
 														data : {
 															"grupoStringId" : grupoStringId
 														},

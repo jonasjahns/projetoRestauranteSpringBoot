@@ -10,7 +10,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import restaurante.model.Pedido;
 import restaurante.model.Usuario;
 
-@RepositoryRestResource
+@RepositoryRestResource(collectionResourceRel = "pedidos", path = "/pedido")
 public interface PedidoDao extends CrudRepository<Pedido, Integer> {
 
 	@Query

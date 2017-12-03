@@ -20,6 +20,7 @@ import restaurante.model.GrupoList;
 import restaurante.model.Ingrediente;
 import restaurante.model.Medida;
 import restaurante.model.Receita;
+import restaurante.model.ReceitaGrupo;
 import restaurante.model.Usuario;
 import restaurante.service.GrupoService;
 import restaurante.service.IngredienteService;

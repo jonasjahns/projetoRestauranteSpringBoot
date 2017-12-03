@@ -207,9 +207,8 @@ public class Pedido {
 	public Date getHora() {
 		return hora;
 	}
-	
-	public String getDataFormatada()
-	{
+
+	public String getDataFormatada() {
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		return df.format(this.data);
 	}
@@ -242,6 +241,11 @@ public class Pedido {
 		} else {
 			return null;
 		}
+	}
+	
+	public String toJson()
+	{
+		return "";
 	}
 
 }

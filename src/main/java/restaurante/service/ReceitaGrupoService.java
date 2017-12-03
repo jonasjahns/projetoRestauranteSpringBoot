@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import restaurante.controller.ReceitaGrupo;
 import restaurante.dao.ReceitaGrupoDao;
+import restaurante.model.ReceitaGrupo;
 
 @Service
 public class ReceitaGrupoService {

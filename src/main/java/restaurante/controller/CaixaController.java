@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import restaurante.model.Comanda;
 import restaurante.model.Ingrediente;
 import restaurante.model.LancamentoEstoque;
 import restaurante.model.Medida;
@@ -25,6 +26,7 @@ import restaurante.model.ReceitaGrupo;
 import restaurante.model.RegistroEstoque;
 import restaurante.model.Usuario;
 import restaurante.model.ValorPedido;
+import restaurante.service.ComandaService;
 import restaurante.service.ConversorMedidasService;
 import restaurante.service.PedidoService;
 import restaurante.service.ReceitaService;
@@ -33,8 +35,8 @@ import restaurante.service.TipoLancamentoEstoqueService;
 import restaurante.service.UsuarioService;
 
 @Controller
-@RequestMapping("/pedido")
-public class PedidoController {
+@RequestMapping("/caixa")
+public class CaixaController {
 
 	@Autowired
 	UsuarioService userService;
@@ -54,16 +56,37 @@ public class PedidoController {
 	@Autowired
 	ConversorMedidasService conversorMedidasService;
 
-	@RequestMapping(value = { "/listar" }, method = RequestMethod.GET)
+	@Autowired
+	ComandaService comandaService;
+
+	@RequestMapping(value = { "/princiapl" }, method = RequestMethod.GET)
 	public String listarPedido(ModelMap model) {
 		model.addAttribute("loggedinuser", getPrincipal());
 		List<Receita> receitas = receitasDisponiveis();
 		model.addAttribute("receitas", receitas);
-		return "todospedidos";
+		return "caixa";
 	}
 
-	@RequestMapping(value = { "/novo/{receitaId}" }, method = RequestMethod.GET)
-	public String novoPedido(ModelMap model, @PathVariable Integer receitaId) {
+	@RequestMapping(value = { "/novo" }, method = RequestMethod.POST)
+	public String novaComanda(ModelMap model) {
+		Comanda comanda = new Comanda();
+		comanda.setUsuario(getUsuario());
+		comanda.setDataInicial(new Date());
+		comanda.setHoraInicial(new Date());
+		comandaService.save(comanda);
+		model.addAttribute("comanda", comanda);
+		return "comanda";
+	}
+
+	@RequestMapping(value = { "/{comandaId}/listar" }, method = RequestMethod.GET)
+	public String comandaAtual(ModelMap model, @PathVariable Integer comandaId) {
+		Comanda comanda = comandaService.getById(comandaId);
+		model.addAttribute("comanda", comanda);
+		return "comanda";
+	}
+
+	@RequestMapping(value = { "/{comandaId}/adicionar/{receitaId}" }, method = RequestMethod.GET)
+	public String novoPedido(ModelMap model, @PathVariable Integer comandaId, @PathVariable Integer receitaId) {
 		model.addAttribute("loggedinuser", getPrincipal());
 		Receita receita = null;
 		for (Receita aux : receitasDisponiveis()) {
@@ -71,37 +94,32 @@ public class PedidoController {
 				receita = aux;
 			}
 		}
+		Comanda comanda = comandaService.getById(comandaId);
 		Pedido pedido = new Pedido();
 		model.addAttribute("receita", receita);
 		model.addAttribute("pedido", pedido);
-		return "cadastrapedido";
+		model.addAttribute("comanda", comanda);
+		return "adicionar";
 	}
 
-	@RequestMapping(value = { "/novo/{receitaId}" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/{comandaId}/adicionar/{receitaId}" }, method = RequestMethod.POST)
 	public String salvarPedido(@Valid Pedido pedido, BindingResult resultado, ModelMap model,
-			@PathVariable Integer receitaId) {
+			@PathVariable Integer receitaId, @PathVariable Integer comandaId) {
 		model.addAttribute("loggedinuser", getPrincipal());
 		if (resultado.hasErrors()) {
 			Receita receita = receitaService.getById(receitaId);
 			model.addAttribute("receita", receita);
-			return "cadastrapedido";
+			return "adicionar";
 		}
 		Date dataAtual = new Date();
 		pedido.setData(dataAtual);
 		pedido.setHora(dataAtual);
 		pedido.setUsuario(getUsuario());
 		pedido.setLancamentosPedido(pedido.getStatus(), getUsuario());
-		pedidoService.save(pedido);
-		for (ValorPedido valorPedido : pedido.getValores()) {
-			LancamentoEstoque lancamentoEstoque = new LancamentoEstoque();
-			lancamentoEstoque.setData(dataAtual);
-			lancamentoEstoque.setValor(1D);
-			lancamentoEstoque.setQuantidade((new Double(valorPedido.getValor())));
-			lancamentoEstoque.setTipo(tipoLancamentoEstoqueService.getByCodigo(52));
-			registroEstoqueService.adicionarLancamento(lancamentoEstoque, valorPedido.getIngrediente(),
-					valorPedido.getMedida());
-
-		}
+		Comanda comanda = comandaService.getById(comandaId);
+		comanda.getPedidos().add(pedido);
+		comandaService.save(comanda);
+		salvarLancamentosEstoque(pedido.getValores(), dataAtual, 52);
 		return "redirect:/pedido/listar";
 	}
 
@@ -114,7 +132,7 @@ public class PedidoController {
 		}
 
 		pedidoService.save(pedido);
-		return "redirect:/pedido/listar";
+		return "redirect:/caixa/princiapl";
 	}
 
 	@RequestMapping(value = { "/editar-{id}" }, method = RequestMethod.GET)
@@ -128,21 +146,24 @@ public class PedidoController {
 		return "cadastrapedido";
 	}
 
-	@RequestMapping(value = { "/deletar-{id}" }, method = RequestMethod.GET)
-	public String deletarPedido(@PathVariable Integer id) {
-		pedidoService.remover(id);
-		return "redirect:/pedido/listar";
+	private String getPrincipal() {
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (principal instanceof UserDetails) {
+			Usuario usuario = userService.findByCPF(((UserDetails) principal).getUsername());
+			return usuario.getFirstName();
+		} else {
+			return "";
+		}
 	}
 
-	@RequestMapping(value = { "/listar/{status}" }, method = RequestMethod.GET)
-	public String listarPedidosPorStatus(@PathVariable Integer status, ModelMap model) {
-		model.addAttribute("loggedinuser", getPrincipal());
-		List<Pedido> pedidos = pedidoService.getByStatus(status);
-		for (Pedido pedido : pedidos) {
-			System.out.println(pedido.toString());
+	private Usuario getUsuario() {
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (principal instanceof UserDetails) {
+			Usuario usuario = userService.findByCPF(((UserDetails) principal).getUsername());
+			return usuario;
+		} else {
+			return null;
 		}
-		model.addAttribute("pedidos", pedidos);
-		return "pedidostatus";
 	}
 
 	private List<Ingrediente> ingredientesDisponiveis(List<Ingrediente> ingredientes, Double valor, Medida medida) {
@@ -192,23 +213,17 @@ public class PedidoController {
 		return disponiveis;
 	}
 
-	private String getPrincipal() {
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		if (principal instanceof UserDetails) {
-			Usuario usuario = userService.findByCPF(((UserDetails) principal).getUsername());
-			return usuario.getFirstName();
-		} else {
-			return "";
+	public void salvarLancamentosEstoque(List<ValorPedido> valoresPedidos, Date dataAtual, Integer codigo) {
+		for (ValorPedido valorPedido : valoresPedidos) {
+			LancamentoEstoque lancamentoEstoque = new LancamentoEstoque();
+			lancamentoEstoque.setData(dataAtual);
+			lancamentoEstoque.setValor(1D);
+			lancamentoEstoque.setQuantidade((new Double(valorPedido.getValor())));
+			lancamentoEstoque.setTipo(tipoLancamentoEstoqueService.getByCodigo(52));
+			registroEstoqueService.adicionarLancamento(lancamentoEstoque, valorPedido.getIngrediente(),
+					valorPedido.getMedida());
+
 		}
 	}
 
-	private Usuario getUsuario() {
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		if (principal instanceof UserDetails) {
-			Usuario usuario = userService.findByCPF(((UserDetails) principal).getUsername());
-			return usuario;
-		} else {
-			return null;
-		}
-	}
 }

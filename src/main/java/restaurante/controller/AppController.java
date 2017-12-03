@@ -15,11 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import restaurante.model.Usuario;
+import restaurante.service.PedidoService;
 import restaurante.service.UsuarioService;
 
 @Controller
 @RequestMapping("/")
 public class AppController {
+
+	@Autowired
+	PedidoService pedidoService;
 
 	@Autowired
 	UsuarioService userService;
