@@ -2,7 +2,7 @@
 <head>
 <title>Receitas Cadastradas</title>
 <%@ include file="parts/header.jsp"%>
-<script src="http://localhost:8081/Boot/static/script/cozinha.js"></script>
+<script src="/Boot/static/script/cozinha.js"></script>
 <script>
 	$(document).ready(function() {
 

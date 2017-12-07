@@ -61,10 +61,16 @@ tr.spaceUnder>td {
 							<option value="5">5</option>
 						</form:select></td>
 				</tr>
-				<tr class="spaceUnder">
-					<td><label for="receitaGrupos[${i.index}].variacao"
+				<tr>
+					<td><label for="receitaGrupos[${i.index}].variacaoMedida"
 						id="labelvalor">Variação: </label></td>
-					<td><form:input path="receitaGrupos[${i.index}].variacao"
+					<td><form:input path="receitaGrupos[${i.index}].variacaoMedida"
+							id="varicao" required="required" /></td>
+				</tr>
+				<tr class="spaceUnder">
+					<td><label for="receitaGrupos[${i.index}].variacaoPreco"
+						id="labelvalor">Variação Preço: </label></td>
+					<td><form:input path="receitaGrupos[${i.index}].variacaoPreco"
 							id="varicao" required="required" /></td>
 				</tr>
 			</c:forEach>

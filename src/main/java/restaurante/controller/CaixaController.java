@@ -193,9 +193,9 @@ public class CaixaController {
 				List<Ingrediente> ingredientes = new ArrayList<Ingrediente>();
 				Double valor;
 				if (receitaGrupo.getNivel() == 1) {
-					valor = new Double(receitaGrupo.getVariacao());
+					valor = new Double(receitaGrupo.getVariacaoMedida());
 				} else {
-					valor = new Double(receitaGrupo.getValores().get((receitaGrupo.getValores().size() - 1)));
+					valor = new Double(receitaGrupo.getValoresMedida().get((receitaGrupo.getValoresMedida().size() - 1)));
 				}
 
 				ingredientes = ingredientesDisponiveis(receitaGrupo.getGrupo().getIngredientes(), valor,

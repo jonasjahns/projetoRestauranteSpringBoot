@@ -25,7 +25,7 @@
 							id="id" items="${grupo.grupo.ingredientes}" itemLabel="nome"
 							itemValue="id" /></td>
 					<td><form:radiobuttons path="valores[${i.index}].valor"
-							items="${grupo.valores}" /></td>
+							items="${grupo.valoresMedida}" /></td>
 					<form:input type="hidden" path="valores[${i.index}].medida"
 						id="medida" value="${grupo.medida.id}" />
 				</tr>

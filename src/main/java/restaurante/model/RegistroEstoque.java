@@ -185,7 +185,7 @@ public class RegistroEstoque {
 	public Double getConsumidos() {
 		Double soma = 0D;
 		for (LancamentoEstoque lancamento : this.lancamentos) {
-			soma = soma - lancamento.getQuantidade();
+			soma = soma + lancamento.getQuantidade();
 		}
 		return soma;
 	}

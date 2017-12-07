@@ -36,7 +36,7 @@ public class PedidoService {
 		return pedidoDao.findByStatus(status);
 	}
 
-	public List<Pedido> getByData(Date data) {
+	public List<Pedido> findByData(Date data) {
 		return pedidoDao.findByData(data);
 	}
 
@@ -55,5 +55,9 @@ public class PedidoService {
 	@Cacheable("pedidos")
 	public List<Pedido> findByUsuarioAndDataAfterAndDataBefore(Usuario usuario, Date dataDe, Date dataAte) {
 		return pedidoDao.findByUsuarioAndDataBetween(usuario, dataDe, dataAte);
+	}
+
+	public List<Pedido> findByDataBetween(Date dataDe, Date dataAte) {
+		return pedidoDao.findByDataBetween(dataDe, dataAte);
 	}
 }

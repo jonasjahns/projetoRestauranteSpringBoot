@@ -36,8 +36,11 @@ public class ReceitaGrupo {
 	@Column(name = "NIVEL")
 	private int nivel;
 
-	@Column(name = "VARIACAO")
-	private int variacao;
+	@Column(name = "VARIACAO_MEDIDA")
+	private int variacaoMedida;
+
+	@Column(name = "VARIACAO_PRECO")
+	private int variacaoPreco;
 
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "MEDIDAS_ID", referencedColumnName = "ID", foreignKey = @ForeignKey(name = "RECEITA_GRUPO_MEDIDA_FK"))
@@ -45,12 +48,11 @@ public class ReceitaGrupo {
 
 	@Column(name = "valores", nullable = true)
 	@ElementCollection(targetClass = Integer.class)
-	private List<Integer> valores;
-
-	public String toJson() {
-		return "ReceitaGrupo [id=" + id + ", grupo=" + grupo + ", editavel=" + editavel + ", nivel=" + nivel
-				+ ", variacao=" + variacao + ", medida=" + medida + ", valores=" + valores + "]";
-	}
+	private List<Integer> valoresMedida;
+	
+	@Column(name = "valores", nullable = true)
+	@ElementCollection(targetClass = Integer.class)
+	private List<Integer> valoresPreco;
 
 	public Integer getId() {
 		return id;
@@ -68,21 +70,34 @@ public class ReceitaGrupo {
 		return nivel;
 	}
 
-	public int getVariacao() {
-		return variacao;
+	public int getVariacaoMedida() {
+		return variacaoMedida;
+	}
+
+	public int getVariacaoPreco() {
+		return variacaoPreco;
 	}
 
 	public Medida getMedida() {
 		return medida;
 	}
 
-	public List<Integer> getValores() {
-		List<Integer> aux = new ArrayList<Integer>();
-		for (int i = 1; i<= this.nivel; i++)
+	public List<Integer> getValoresMedida() {
+		List<Integer> valoresMedida = new ArrayList<Integer>();
+		for (int i = 1; i <= this.nivel; i++)
 		{
-			aux.add(i*this.variacao);
+			valoresMedida.add(this.variacaoMedida * i);
 		}
-		return aux;
+		return valoresMedida;
+	}
+
+	public List<Integer> getValoresPreco() {
+		List<Integer> valoresPreco= new ArrayList<Integer>();
+		for (int i = 1; i <= this.nivel; i++)
+		{
+			valoresPreco.add(this.variacaoPreco * i);
+		}
+		return valoresPreco;
 	}
 
 	public void setId(Integer id) {
@@ -101,16 +116,24 @@ public class ReceitaGrupo {
 		this.nivel = nivel;
 	}
 
-	public void setVariacao(int variacao) {
-		this.variacao = variacao;
+	public void setVariacaoMedida(int variacaoMedida) {
+		this.variacaoMedida = variacaoMedida;
+	}
+
+	public void setVariacaoPreco(int variacaoPreco) {
+		this.variacaoPreco = variacaoPreco;
 	}
 
 	public void setMedida(Medida medida) {
 		this.medida = medida;
 	}
 
-	public void setValores(List<Integer> valores) {
-		this.valores = valores;
+	public void setValoresMedida(List<Integer> valoresMedida) {
+		this.valoresMedida = valoresMedida;
+	}
+
+	public void setValoresPreco(List<Integer> valoresPreco) {
+		this.valoresPreco = valoresPreco;
 	}
 
 	@Override
@@ -122,8 +145,10 @@ public class ReceitaGrupo {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((medida == null) ? 0 : medida.hashCode());
 		result = prime * result + nivel;
-		result = prime * result + ((valores == null) ? 0 : valores.hashCode());
-		result = prime * result + variacao;
+		result = prime * result + ((valoresMedida == null) ? 0 : valoresMedida.hashCode());
+		result = prime * result + ((valoresPreco == null) ? 0 : valoresPreco.hashCode());
+		result = prime * result + variacaoMedida;
+		result = prime * result + variacaoPreco;
 		return result;
 	}
 
@@ -155,12 +180,19 @@ public class ReceitaGrupo {
 			return false;
 		if (nivel != other.nivel)
 			return false;
-		if (valores == null) {
-			if (other.valores != null)
+		if (valoresMedida == null) {
+			if (other.valoresMedida != null)
 				return false;
-		} else if (!valores.equals(other.valores))
+		} else if (!valoresMedida.equals(other.valoresMedida))
 			return false;
-		if (variacao != other.variacao)
+		if (valoresPreco == null) {
+			if (other.valoresPreco != null)
+				return false;
+		} else if (!valoresPreco.equals(other.valoresPreco))
+			return false;
+		if (variacaoMedida != other.variacaoMedida)
+			return false;
+		if (variacaoPreco != other.variacaoPreco)
 			return false;
 		return true;
 	}
@@ -168,7 +200,8 @@ public class ReceitaGrupo {
 	@Override
 	public String toString() {
 		return "ReceitaGrupo [id=" + id + ", grupo=" + grupo + ", editavel=" + editavel + ", nivel=" + nivel
-				+ ", variacao=" + variacao + ", medida=" + medida + ", valores=" + valores + "]";
+				+ ", variacaoMedida=" + variacaoMedida + ", variacaoPreco=" + variacaoPreco + ", medida=" + medida
+				+ ", valoresMedida=" + valoresMedida + ", valoresPreco=" + valoresPreco + "]";
 	}
 
 }

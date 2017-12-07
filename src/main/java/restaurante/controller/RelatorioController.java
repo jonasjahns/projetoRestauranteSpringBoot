@@ -2,6 +2,9 @@ package restaurante.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -14,7 +17,10 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import restaurante.model.Pedido;
+import restaurante.model.RangeDatas;
 import restaurante.model.Usuario;
+import restaurante.service.PedidoService;
 import restaurante.service.UsuarioService;
 
 @Controller
@@ -24,11 +30,31 @@ public class RelatorioController {
 	@Autowired
 	UsuarioService userService;
 
+	@Autowired
+	PedidoService pedidoService;
+	
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public String meusServicos(ModelMap model) {
 		model.addAttribute("loggedinuser", getPrincipal());
 		model.addAttribute("usuario", getUsuario());
 		return "relatorios";
+	}
+	
+	@RequestMapping(value = { "/vendas" }, method = RequestMethod.GET)
+	public String configuraRelatorioDeVendas(ModelMap model) {
+		model.addAttribute("loggedinuser", getPrincipal());
+		model.addAttribute("usuario", getUsuario());
+		model.addAttribute("rangeDatas", new RangeDatas());
+		return "relatoriovendas";
+	}
+
+	@RequestMapping(value = { "/vendas" }, method = RequestMethod.POST)
+	public String relatorioDeVendas(ModelMap model, @Valid RangeDatas rangeDatas) {
+		List<Pedido> pedidosFiltrados = pedidoService.findByDataBetween(rangeDatas.getDataDe(), rangeDatas.getDataAte());
+		model.addAttribute("pedidos", pedidosFiltrados);
+		model.addAttribute("loggedinuser", getPrincipal());
+		model.addAttribute("usuario", getUsuario());
+		return "relatoriovendas";
 	}
 
 	private String getPrincipal() {

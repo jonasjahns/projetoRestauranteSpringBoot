@@ -40,7 +40,7 @@ public class CozinhaController {
 	@RequestMapping(value = { "/listar" }, method = RequestMethod.GET)
 	private String todosPedidosDoDia(ModelMap model) {
 		Date data = new Date();
-		List<Pedido> pedidosDoDia = pedidoService.getByData(data);
+		List<Pedido> pedidosDoDia = pedidoService.findByData(data);
 		model.addAttribute("loggedinuser", getPrincipal());
 		model.addAttribute("pedidos", pedidosDoDia);
 		model.addAttribute("teste", "teste");
