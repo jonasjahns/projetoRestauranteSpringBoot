@@ -40,7 +40,7 @@ public class ReceitaGrupo {
 	private int variacaoMedida;
 
 	@Column(name = "VARIACAO_PRECO")
-	private int variacaoPreco;
+	private Long variacaoPreco;
 
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "MEDIDAS_ID", referencedColumnName = "ID", foreignKey = @ForeignKey(name = "RECEITA_GRUPO_MEDIDA_FK"))
@@ -52,7 +52,7 @@ public class ReceitaGrupo {
 	
 	@Column(name = "valores", nullable = true)
 	@ElementCollection(targetClass = Integer.class)
-	private List<Integer> valoresPreco;
+	private List<Long> valoresPreco;
 
 	public Integer getId() {
 		return id;
@@ -74,7 +74,7 @@ public class ReceitaGrupo {
 		return variacaoMedida;
 	}
 
-	public int getVariacaoPreco() {
+	public Long getVariacaoPreco() {
 		return variacaoPreco;
 	}
 
@@ -91,8 +91,8 @@ public class ReceitaGrupo {
 		return valoresMedida;
 	}
 
-	public List<Integer> getValoresPreco() {
-		List<Integer> valoresPreco= new ArrayList<Integer>();
+	public List<Long> getValoresPreco() {
+		List<Long> valoresPreco= new ArrayList<Long>();
 		for (int i = 1; i <= this.nivel; i++)
 		{
 			valoresPreco.add(this.variacaoPreco * i);
@@ -120,7 +120,7 @@ public class ReceitaGrupo {
 		this.variacaoMedida = variacaoMedida;
 	}
 
-	public void setVariacaoPreco(int variacaoPreco) {
+	public void setVariacaoPreco(Long variacaoPreco) {
 		this.variacaoPreco = variacaoPreco;
 	}
 
@@ -132,7 +132,7 @@ public class ReceitaGrupo {
 		this.valoresMedida = valoresMedida;
 	}
 
-	public void setValoresPreco(List<Integer> valoresPreco) {
+	public void setValoresPreco(List<Long> valoresPreco) {
 		this.valoresPreco = valoresPreco;
 	}
 
@@ -148,7 +148,6 @@ public class ReceitaGrupo {
 		result = prime * result + ((valoresMedida == null) ? 0 : valoresMedida.hashCode());
 		result = prime * result + ((valoresPreco == null) ? 0 : valoresPreco.hashCode());
 		result = prime * result + variacaoMedida;
-		result = prime * result + variacaoPreco;
 		return result;
 	}
 

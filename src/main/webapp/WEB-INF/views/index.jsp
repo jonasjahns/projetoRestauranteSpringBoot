@@ -30,7 +30,7 @@
 					</tr>
 					<tr>
 						<td>Fente de Caixa</td>
-						<td><a href="<c:url value='/caixa/inicial' />">Acessar</a></td>
+						<td><a href="<c:url value='/caixa/principal' />">Acessar</a></td>
 					</tr>
 					<tr>
 						<td>Relatórios</td>

@@ -247,5 +247,16 @@ public class Pedido {
 	{
 		return "";
 	}
+	
+	public Long getCusto()
+	{
+		Long custo = new Long(0);
+		for(ValorPedido valorPedido : this.valores)
+		{
+			custo += valorPedido.getCusto();
+		}
+		
+		return custo;
+	}
 
 }

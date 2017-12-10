@@ -1,5 +1,7 @@
 package restaurante.model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +30,7 @@ public class Comanda {
 	@Column
 	private Integer id;
 
-	@OneToMany (cascade=CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Pedido> pedidos;
 
 	@ManyToOne
@@ -43,7 +45,7 @@ public class Comanda {
 	@DateTimeFormat(pattern = "HH:mm:ss")
 	@Temporal(TemporalType.TIME)
 	private Date horaInicial;
-	
+
 	@Column(name = "data_final", nullable = true)
 	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	@Temporal(TemporalType.DATE)
@@ -53,11 +55,11 @@ public class Comanda {
 	@DateTimeFormat(pattern = "HH:mm:ss")
 	@Temporal(TemporalType.TIME)
 	private Date horaFinal;
-	
-	@Column (name = "canal", nullable = true)
-	private Integer canal; //1 = Caixa, 2 = Token, 3 = Internet
-	
-	@Column (name = "id_pagamento", nullable = true)
+
+	@Column(name = "canal", nullable = true)
+	private Integer canal; // 1 = Caixa, 2 = Token, 3 = Internet
+
+	@Column(name = "id_pagamento", nullable = true)
 	private Integer idPagamento;
 
 	public Integer getId() {
@@ -181,6 +183,36 @@ public class Comanda {
 				+ ", horaInicial=" + horaInicial + ", dataFinal=" + dataFinal + ", horaFinal=" + horaFinal + ", canal="
 				+ canal + ", idPagamento=" + idPagamento + "]";
 	}
+
+	public String getHoraInicialFormatada() {
+
+		DateFormat hora = new SimpleDateFormat("HH:mm:ss");
+		return hora.format(this.horaInicial);
+	}
+
+	public String getHoraFinalFormatada() {
+		DateFormat hora = new SimpleDateFormat("HH:mm:ss");
+		return hora.format(this.horaFinal);
+	}
+
+	public String getDataInicialFormatada() {
+		DateFormat data = new SimpleDateFormat("dd/MM/yyyy");
+		return data.format(this.dataInicial);
+	}
+
+	public String getDataFinalFormatada() {
+		DateFormat data = new SimpleDateFormat("dd/MM/yyyy");
+		return data.format(this.dataFinal);
+	}
 	
-	
+	public Long getTotal()
+	{
+		Long total = new Long(0);
+		for (Pedido pedido : this.pedidos)
+		{
+			total += pedido.getCusto();
+		}
+		return total;
+	}
+
 }

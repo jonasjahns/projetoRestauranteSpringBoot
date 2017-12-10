@@ -28,9 +28,12 @@
 	src="/Boot/static/script/datatables.min.js"></script>
 	
 <link rel="stylesheet" type="text/css"
-	href="/Boot/static/style/buttons.dataTables.min.css" />
+	href="/Boot/static/script/pdfmake.min.js" />
 
 <script type="text/javascript"
-	src="/Boot/static/script/dataTables.buttons.min.js"></script>
+	src="/Boot/static/script/vfs_fonts.js"></script>
+	
+	<script type="text/javascript"
+	src="/Boot/static/script/list.min.js"></script>
 
 

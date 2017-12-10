@@ -6,6 +6,24 @@
 <html>
 <head>
 <%@ include file="parts/header.jsp"%>
+<script>
+	jQuery(document).ready(function() {
+		jQuery('.radio').on('click', function() {
+
+			// Get the element index , which one we click on
+			var indx = jQuery(this).index('.radio');
+
+			// Trigger a click on the same index in the second radio set
+
+			jQuery('.teste')[indx].click();
+		})
+	});
+</script>
+<style>
+td.escondido {
+	visibility: hidden;
+}
+</style>
 <title>Faça Seu Pedido</title>
 </head>
 <body>
@@ -25,7 +43,10 @@
 							id="id" items="${grupo.grupo.ingredientes}" itemLabel="nome"
 							itemValue="id" /></td>
 					<td><form:radiobuttons path="valores[${i.index}].valor"
-							items="${grupo.valoresMedida}" /></td>
+							items="${grupo.valoresMedida}" class="radio" /></td>
+					<td class="escondido"><form:radiobuttons
+							path="valores[${i.index}].custo" items="${grupo.valoresPreco}"
+							class="teste" /></td>
 					<form:input type="hidden" path="valores[${i.index}].medida"
 						id="medida" value="${grupo.medida.id}" />
 				</tr>

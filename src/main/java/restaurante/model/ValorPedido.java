@@ -24,6 +24,9 @@ public class ValorPedido {
 	@Column(name = "valores", nullable = true)
 	private Integer valor;
 
+	@Column(name = "custo", nullable = true)
+	private Long custo;
+
 	@ManyToOne
 	@JoinColumn(name = "INGREDIENTE_ID", referencedColumnName = "ID", foreignKey = @ForeignKey(name = "VALOR_PEDIDO_INGREDIENTE_FK"))
 	private Ingrediente ingrediente;
@@ -93,6 +96,14 @@ public class ValorPedido {
 	public String toString() {
 		return "ValorPedido [id=" + id + ", valor=" + valor + ", ingrediente=" + ingrediente + ", medida=" + medida
 				+ "]";
+	}
+
+	public Long getCusto() {
+		return custo;
+	}
+
+	public void setCusto(Long custo) {
+		this.custo = custo;
 	}
 
 }

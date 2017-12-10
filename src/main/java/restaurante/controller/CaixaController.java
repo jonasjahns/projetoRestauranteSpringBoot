@@ -59,7 +59,7 @@ public class CaixaController {
 	@Autowired
 	ComandaService comandaService;
 
-	@RequestMapping(value = { "/princiapl" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/principal" }, method = RequestMethod.GET)
 	public String listarPedido(ModelMap model) {
 		model.addAttribute("loggedinuser", getPrincipal());
 		List<Receita> receitas = receitasDisponiveis();
@@ -75,14 +75,26 @@ public class CaixaController {
 		comanda.setHoraInicial(new Date());
 		comandaService.save(comanda);
 		model.addAttribute("comanda", comanda);
+		model.addAttribute("loggedinuser", getPrincipal());
+		return "comanda";
+	}
+
+	@RequestMapping(value = { "/{comandaId}/" }, method = RequestMethod.GET)
+	public String comandaAtual(ModelMap model, @PathVariable Integer comandaId) {
+		Comanda comanda = comandaService.getById(comandaId);
+		model.addAttribute("comanda", comanda);
+		model.addAttribute("loggedinuser", getPrincipal());
 		return "comanda";
 	}
 
 	@RequestMapping(value = { "/{comandaId}/listar" }, method = RequestMethod.GET)
-	public String comandaAtual(ModelMap model, @PathVariable Integer comandaId) {
+	public String receitasDisponiveis(ModelMap model, @PathVariable Integer comandaId) {
 		Comanda comanda = comandaService.getById(comandaId);
 		model.addAttribute("comanda", comanda);
-		return "comanda";
+		List<Receita> receitas = receitasDisponiveis();
+		model.addAttribute("receitas", receitas);
+		model.addAttribute("loggedinuser", getPrincipal());
+		return "disponiveis";
 	}
 
 	@RequestMapping(value = { "/{comandaId}/adicionar/{receitaId}" }, method = RequestMethod.GET)
@@ -99,7 +111,8 @@ public class CaixaController {
 		model.addAttribute("receita", receita);
 		model.addAttribute("pedido", pedido);
 		model.addAttribute("comanda", comanda);
-		return "adicionar";
+		model.addAttribute("loggedinuser", getPrincipal());
+		return "cadastrapedido";
 	}
 
 	@RequestMapping(value = { "/{comandaId}/adicionar/{receitaId}" }, method = RequestMethod.POST)
@@ -120,7 +133,8 @@ public class CaixaController {
 		comanda.getPedidos().add(pedido);
 		comandaService.save(comanda);
 		salvarLancamentosEstoque(pedido.getValores(), dataAtual, 52);
-		return "redirect:/pedido/listar";
+		model.addAttribute("loggedinuser", getPrincipal());
+		return "redirect:/caixa/" + comanda.getId() + "/listar/";
 	}
 
 	@RequestMapping(value = { "/editar-{id}" }, method = RequestMethod.POST)
@@ -143,6 +157,7 @@ public class CaixaController {
 		model.addAttribute("pedido", pedido);
 		model.addAttribute("receita", receita);
 		model.addAttribute("editar", true);
+		model.addAttribute("loggedinuser", getPrincipal());
 		return "cadastrapedido";
 	}
 
@@ -195,7 +210,8 @@ public class CaixaController {
 				if (receitaGrupo.getNivel() == 1) {
 					valor = new Double(receitaGrupo.getVariacaoMedida());
 				} else {
-					valor = new Double(receitaGrupo.getValoresMedida().get((receitaGrupo.getValoresMedida().size() - 1)));
+					valor = new Double(
+							receitaGrupo.getValoresMedida().get((receitaGrupo.getValoresMedida().size() - 1)));
 				}
 
 				ingredientes = ingredientesDisponiveis(receitaGrupo.getGrupo().getIngredientes(), valor,
