@@ -12,10 +12,7 @@
 			"searching" : false,
 			"lengthChange" : false,
 			"pageLength" : 15,
-			"ajax" : {
-				"url" : "http://localhost:8081/Boot/cozinha/pedidos",
-				"dataSrc": ""
-			}
+			"ajax" : "",
 		});
 	})
 </script>
@@ -53,6 +50,20 @@
 									href="<c:url value='/cozinha/pedido-${pedido.id}/atualizar/2' />"><strong>Preparando</strong></a></td>
 							</tr>
 						</c:forEach>
+					</tbody>
+				</table>
+				<table class="table table-hover" id="table-teste">
+					<thead class="thead-inverse">
+						<tr>
+							<th>Prato</th>
+							<th>Cliente</th>
+							<th>Status</th>
+							<th>Hora Pedido</th>
+							<th>Última Atualização</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
 					</tbody>
 				</table>
 			</div>

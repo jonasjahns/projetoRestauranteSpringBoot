@@ -174,7 +174,8 @@ public class PedidoController {
 				if (receitaGrupo.getNivel() == 1) {
 					valor = new Double(receitaGrupo.getVariacaoMedida());
 				} else {
-					valor = new Double(receitaGrupo.getValoresMedida().get((receitaGrupo.getValoresMedida().size() - 1)));
+					valor = new Double(
+							receitaGrupo.getValoresMedida().get((receitaGrupo.getValoresMedida().size() - 1)));
 				}
 
 				ingredientes = ingredientesDisponiveis(receitaGrupo.getGrupo().getIngredientes(), valor,
@@ -210,5 +211,11 @@ public class PedidoController {
 		} else {
 			return null;
 		}
+	}
+
+	@RequestMapping(value = { "/teste/" }, method = RequestMethod.GET)
+	public String testePostPedido(ModelMap model) {
+		model.addAttribute("loggedinuser", getPrincipal());
+		return "teste";
 	}
 }

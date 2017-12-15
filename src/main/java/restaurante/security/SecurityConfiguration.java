@@ -32,6 +32,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.access("hasRole('ADMIN') or hasRole('DBA')").and().formLogin().loginPage("/login")
 				.loginProcessingUrl("/login").usernameParameter("ssoId").passwordParameter("password").and().csrf()
 				.and().exceptionHandling().accessDeniedPage("/negado");
+		//http.authorizeRequests().anyRequest().permitAll().and().csrf().disable();
 	}
 
 	@Bean

@@ -11,9 +11,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.google.gson.Gson;
 
 import restaurante.model.Pedido;
 import restaurante.model.Usuario;
@@ -29,13 +26,6 @@ public class CozinhaController {
 
 	@Autowired
 	UsuarioService userService;
-
-	@RequestMapping(value = { "/pedidos" }, method = RequestMethod.GET)
-	private @ResponseBody String listarPedidos() {
-		List<Pedido> pedidos = pedidoService.getAll();
-		String json = new Gson().toJson(pedidos);
-		return  json;
-	}
 
 	@RequestMapping(value = { "/listar" }, method = RequestMethod.GET)
 	private String todosPedidosDoDia(ModelMap model) {

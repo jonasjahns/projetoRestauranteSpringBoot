@@ -5,23 +5,35 @@
 <html>
 <head>
 <%@ include file="parts/header.jsp"%>
-<title>Cadastrar Medidas</title>
+<title>Pagamento</title>
 </head>
 <body>
 	<%@include file="parts/authheader.jsp"%>
-	<h2>Cadastro de Medidas</h2>
+	<h2>Informe os dados do Cartão</h2>
 
 	<form:form method="POST" modelAttribute="cartaoDeCredito">
-		<form:input type="hidden" path="id" id="id" />
 		<table>
 			<tr>
-				<td><label for="nome">Nome: </label></td>
-				<td><form:input path="nome" id="nome" required="required" /></td>
+				<td><label for="numeroCartao">Número do Cartão: </label></td>
+				<td><form:input type="number" path="numeroCartao"
+						id="numeroCartao" required="required" /></td>
 			</tr>
 
 			<tr>
-				<td><label for="abreviatura">Abreviatura: </label></td>
-				<td><form:input path="abreviatura" id="abreviatura"
+				<td><label for="dataVencimento">Vencimento: </label></td>
+				<td><form:input path="dataVencimento" id="dataVencimento"
+						required="required" /></td>
+			</tr>
+
+			<tr>
+				<td><label for="codigoSeguranca">Código de Segurança: </label></td>
+				<td><form:input path="codigoSeguranca" id="codigoSeguranca"
+						required="required" size="3" /></td>
+			</tr>
+
+			<tr>
+				<td><label for="portador">Nome do Portador: </label></td>
+				<td><form:input path="portador" id="portador"
 						required="required" /></td>
 			</tr>
 
@@ -37,8 +49,5 @@
 			</tr>
 		</table>
 	</form:form>
-	<br />
-	<br /> Voltar para
-	<a href="<c:url value='/medida/listar' />">Listar de Medidas</a>
 </body>
 </html>

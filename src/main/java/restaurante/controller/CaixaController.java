@@ -1,5 +1,6 @@
 package restaurante.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,6 +27,16 @@ import restaurante.model.ReceitaGrupo;
 import restaurante.model.RegistroEstoque;
 import restaurante.model.Usuario;
 import restaurante.model.ValorPedido;
+import restaurante.pagamentos.AmbienteCielo;
+import restaurante.pagamentos.CartaoDeCredito;
+import restaurante.pagamentos.CieloEcommerce;
+import restaurante.pagamentos.CieloError;
+import restaurante.pagamentos.CieloRequestException;
+import restaurante.pagamentos.DadosCielo;
+import restaurante.pagamentos.Payment;
+import restaurante.pagamentos.RespostaVenda;
+import restaurante.pagamentos.ValidaCartao;
+import restaurante.pagamentos.Venda;
 import restaurante.service.ComandaService;
 import restaurante.service.ConversorMedidasService;
 import restaurante.service.PedidoService;
@@ -133,8 +144,71 @@ public class CaixaController {
 		comanda.getPedidos().add(pedido);
 		comandaService.save(comanda);
 		salvarLancamentosEstoque(pedido.getValores(), dataAtual, 52);
-		model.addAttribute("loggedinuser", getPrincipal());
 		return "redirect:/caixa/" + comanda.getId() + "/listar/";
+	}
+
+	@RequestMapping(value = { "/{comandaId}/pagar/cartao" }, method = RequestMethod.GET)
+	public String paginaPagamentoPedido(ModelMap model, @PathVariable Integer comandaId) {
+		model.addAttribute("loggedinuser", getPrincipal());
+		Comanda comanda = comandaService.getById(comandaId);
+		model.addAttribute("comanda", comanda);
+		model.addAttribute("cartaoDeCredito", new CartaoDeCredito());
+		return "pagar";
+	}
+
+	@RequestMapping(value = { "/{comandaId}/pagar/cartao" }, method = RequestMethod.POST)
+	public String pagarPedido(ModelMap model, @PathVariable Integer comandaId, CartaoDeCredito cartaoDeCredito) {
+		// ...
+		// Configure seu merchant
+		DadosCielo merchant = new DadosCielo();
+		AmbienteCielo ambienteCielo = new AmbienteCielo();
+
+		// Crie uma instância de Sale informando o ID do pagamento
+		Venda sale = new Venda(comandaId.toString(), getUsuario());
+
+		// Crie uma instância de Payment informando o valor do pagamento
+		sale.setPayment(new Payment(comandaService.getById(comandaId).getTotal().intValue()));
+		Payment payment = sale.getPayment();
+
+		// Crie uma instância de Credit Card utilizando os dados de teste
+		// esses dados estão disponíveis no manual de integração
+		// if (ValidaCartao.Validar(cartaoDeCredito.getNumeroCartao())) {
+		payment.creditCard(cartaoDeCredito.getCodigoSeguranca(),
+				ValidaCartao.badeira(cartaoDeCredito.getNumeroCartao()));
+		payment.getCreditCard().setDataVencimento(cartaoDeCredito.getDataVencimento());
+		payment.getCreditCard().setNumeroCartao(cartaoDeCredito.getNumeroCartao());
+		payment.getCreditCard().setPortador(cartaoDeCredito.getPortador());
+		// }
+		RespostaVenda resposta = null;
+
+		// Crie o pagamento na Cielo
+		try {
+			// Configure o SDK com seu merchant e o ambiente apropriado para
+			// criar a venda
+			sale = new CieloEcommerce(merchant, ambienteCielo).createSale(sale);
+
+			// Com a venda criada na Cielo, já temos o ID do pagamento, TID e
+			// demais
+			// dados retornados pela Cielo
+			String paymentId = sale.getPayment().getPaymentId();
+
+			// Com o ID do pagamento, podemos fazer sua captura, se ela não
+			// tiver sido capturada ainda
+			resposta = new CieloEcommerce(merchant, ambienteCielo).captureSale(paymentId, 15700, 0);
+
+		} catch (CieloRequestException e) {
+			// Em caso de erros de integração, podemos tratar o erro aqui.
+			// os códigos de erro estão todos disponíveis no manual de
+			// integração.
+			CieloError error = null;
+			error = e.getError();
+			System.out.println(error.toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println(resposta.toString());
+		model.addAttribute("resposta", resposta);
+		return "pago";
 	}
 
 	@RequestMapping(value = { "/editar-{id}" }, method = RequestMethod.POST)
