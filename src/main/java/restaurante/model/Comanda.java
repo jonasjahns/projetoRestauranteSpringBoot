@@ -2,6 +2,7 @@ package restaurante.model;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,6 +25,19 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "COMANDA")
 @SequenceGenerator(name = "COMANDA_SEQUENCE", sequenceName = "COMANDA_SEQ", initialValue = 1, allocationSize = 1)
 public class Comanda {
+
+	public Comanda() {
+	}
+
+	public Comanda(Usuario usuario, ArrayList<Pedido> pedidos) {
+		this.usuario = usuario;
+		this.dataInicial = new Date();
+		this.horaInicial = new Date();
+		this.dataFinal = new Date();
+		this.horaFinal = new Date();
+		this.pedidos = pedidos;
+		this.canal = 3;
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "COMANDA_SEQUENCE")
@@ -204,13 +218,13 @@ public class Comanda {
 		DateFormat data = new SimpleDateFormat("dd/MM/yyyy");
 		return data.format(this.dataFinal);
 	}
-	
-	public Long getTotal()
-	{
+
+	public Long getTotal() {
 		Long total = new Long(0);
-		for (Pedido pedido : this.pedidos)
-		{
-			total += pedido.getCusto();
+		if (this.pedidos != null) {
+			for (Pedido pedido : this.pedidos) {
+				total += pedido.getCusto();
+			}
 		}
 		return total;
 	}

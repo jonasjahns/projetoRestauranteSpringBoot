@@ -36,16 +36,6 @@
 
 <script type="text/javascript" src="/Boot/static/script/app.js"></script>
 
-<script>
-	$(document).ready(function() {
-		setFormulario();
-	})
-</script>
-<style>
-body {
-	display: none;
-}
-</style>
 
 
 

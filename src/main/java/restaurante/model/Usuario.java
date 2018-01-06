@@ -17,6 +17,8 @@ import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.google.gson.annotations.SerializedName;
+
 @Entity
 @Table(name = "USUARIOS")
 @SequenceGenerator(name = "USUARIOS_SEQUENCE", sequenceName = "USUARIOS_SEQ", initialValue = 2, allocationSize = 1)
@@ -36,6 +38,7 @@ public class Usuario {
 
 	@NotEmpty
 	@Column(name = "FIRST_NAME", nullable = false)
+	@SerializedName("Name")
 	private String firstName;
 
 	@NotEmpty

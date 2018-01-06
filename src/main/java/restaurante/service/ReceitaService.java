@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import restaurante.dao.ReceitaDao;
@@ -59,6 +60,7 @@ public class ReceitaService {
 		return disponiveis;
 	}
 
+	@Cacheable("receitas")
 	public List<Receita> receitasDisponiveis() {
 		List<Receita> disponiveis = new ArrayList<Receita>();
 		for (Receita receita : this.getAll()) {

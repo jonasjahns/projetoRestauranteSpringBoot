@@ -10,42 +10,49 @@
 </head>
 <body>
 	<%@include file="parts/authheader.jsp"%>
-	<h2>Cadastro de Ingredientes</h2>
+	<div class="container-fluid">
+		<div id="divRow">
+			<div id="divCol">
+				<div id="divForm">
+					<br> <br>
+					<form:form method="POST" modelAttribute="ingrediente">
+						<form:input type="hidden" path="id" id="id" />
+						<table>
+							<tr>
+								<td><h3>Criar Ingrediente</h3></td>
+							</tr>
+							<tr>
+								<td><form:input path="nome" id="nome" required="required"
+										placeholder="Nome" /></td>
+							</tr>
+							<tr>
+								<td><form:select path="carne" id="carne"
+										required="required">
+										<option value="" disabled selected>É Carne?</option>
+										<option value="0">Não</option>
+										<option value="1">Sim</option>
+									</form:select></td>
+							</tr>
 
-	<form:form method="POST" modelAttribute="ingrediente">
-		<form:input type="hidden" path="id" id="id" />
-		<table>
-			<tr>
-				<td><label for="nome">Nome: </label></td>
-				<td><form:input path="nome" id="nome" required="required" /></td>
-			</tr>
+							<tr>
+								<td colspan="3"><c:choose>
+										<c:when test="${editar}">
+											<input type="submit" value="Atualizar" id="enviar" />
+										</c:when>
+										<c:otherwise>
+											<input type="submit" value="Registrar" id="enviar" />
+										</c:otherwise>
+									</c:choose></td>
+							</tr>
 
-
-
-			<tr>
-				<td><label for="carne">É Carne? </label></td>
-				<td><form:select path="carne" id="carne" required="required">
-						<option value="0">Não</option>
-						<option value="1">Sim</option>
-					</form:select></td>
-			</tr>
-
-			<tr>
-				<td colspan="3"><c:choose>
-						<c:when test="${editar}">
-							<input type="submit" value="Atualizar" />
-						</c:when>
-						<c:otherwise>
-							<input type="submit" value="Registrar" />
-						</c:otherwise>
-					</c:choose></td>
-			</tr>
-
-		</table>
-	</form:form>
+						</table>
+					</form:form>
+				</div>
+			</div>
+		</div>
+	</div>
 	<br />
-	<br /> Voltar para
-	<a href="<c:url value='/ingrediente/listar' />">Lista de
-		Ingredientes</a>
+	<br />
+	<a id="btnVoltar" href="<c:url value='/ingrediente/listar' />">Voltar</a>
 </body>
 </html>

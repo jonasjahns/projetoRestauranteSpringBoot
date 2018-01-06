@@ -6,6 +6,8 @@
 <head>
 <%@ include file="parts/header.jsp"%>
 <title>Pagamento</title>
+
+
 </head>
 <body>
 	<%@include file="parts/authheader.jsp"%>

@@ -26,6 +26,9 @@ public class PedidoService {
 
 	@Autowired
 	ApplicationEventPublisher applicationEventPublisher;
+	
+	@Autowired
+	RegistroEstoqueService registroEstoqueService;
 
 	public Pedido getById(Integer id) {
 		return pedidoDao.findOne(id);
@@ -72,6 +75,12 @@ public class PedidoService {
 
 	public List<Pedido> findByDataBetween(Date dataDe, Date dataAte) {
 		return pedidoDao.findByDataBetween(dataDe, dataAte);
+	}
+	
+	public void salvarPedidoAndroid(Pedido pedido)
+	{
+		pedidoDao.save(pedido);
+		registroEstoqueService.salvarReceita(pedido);
 	}
 
 	public String pedidosJsonByDate(Date data) {

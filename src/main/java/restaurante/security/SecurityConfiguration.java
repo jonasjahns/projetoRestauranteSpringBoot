@@ -28,10 +28,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/", "Boot/",  "/Boot/", "/Boot/cadastros/", "/cadastros/**" , "/cadastros").authenticated()
 				.antMatchers("/newuser/**", "/delete-user-*, /login").access("hasRole('ADMIN')")
-				.antMatchers("/receitaGrupo/listar/medidas").permitAll().antMatchers("/edit-user-*")
-				.access("hasRole('ADMIN') or hasRole('DBA')").and().formLogin().loginPage("/login")
-				.loginProcessingUrl("/login").usernameParameter("ssoId").passwordParameter("password").and().csrf()
-				.and().exceptionHandling().accessDeniedPage("/negado");
+				.antMatchers("/receitaGrupo/listar/medidas").permitAll()
+				.antMatchers("/edit-user-*").access("hasRole('ADMIN') or hasRole('DBA')")
+				.antMatchers("/Boot/android/**").permitAll()
+				.and().formLogin().loginPage("/login").loginProcessingUrl("/login").usernameParameter("ssoId").passwordParameter("password").and().csrf().disable()
+				.exceptionHandling().accessDeniedPage("/negado");
 		//http.authorizeRequests().anyRequest().permitAll().and().csrf().disable();
 	}
 

@@ -25,64 +25,74 @@
 </head>
 <body>
 	<%@include file="parts/authheader.jsp"%>
-	<h3>Cadastro de Conversores de Medidas</h3>
+	<div class="container-fluid">
+		<div id="divRow">
+			<div id="divCol">
+				<div id="divForm">
+					<br> <br>
+					<form:form method="POST" modelAttribute="conversorMedidas">
+						<form:input type="hidden" path="id" id="id" />
 
-	<form:form method="POST" modelAttribute="conversorMedidas">
-		<form:input type="hidden" path="id" id="id" />
+						<table>
+							<tr>
+								<td><h3>Criar Conversor</h3></td>
+							</tr>
+							<tr>
+								<td><form:select path="de" required="required">
+										<option value="" disabled selected>Medida de:</option>
+										<form:options items="${todasMedidas}" itemLabel="nome"
+											itemValue="id" />
+									</form:select></td>
+							</tr>
 
-		<table>
-			<tr>
-				<td><label for="de">Medida de: </label></td>
-				<td><form:select path="de" required="required">
-						<form:options items="${todasMedidas}" itemLabel="nome"
-							itemValue="id" />
-					</form:select></td>
-			</tr>
+							<tr>
+								<td><form:select path="para" required="required">
+										<option value="" disabled selected>Medida para:</option>
+										<form:options items="${todasMedidas}" itemLabel="nome"
+											itemValue="id" />
+									</form:select></td>
+							</tr>
 
-			<tr>
-				<td><label for="para">Medida para: </label></td>
-				<td><form:select path="para" required="required">
-						<form:options items="${todasMedidas}" itemLabel="nome"
-							itemValue="id" />
-					</form:select></td>
-			</tr>
+							<tr>
+								<td><form:select path="padrao" required="required"
+										id="padrao" onclick="yesnoCheck()">
+										<option value="" disabled selected>É Padrão?</option>
+										<option value="1">Sim</option>
+										<option value="0">Não</option>
+									</form:select></td>
+							</tr>
 
-			<tr>
-				<td><label for="padrao">Padrão: </label></td>
-				<td><form:select path="padrao" required="required" id="padrao"
-						onclick="yesnoCheck()">
-						<option value="1" selected="true">Sim</option>
-						<option value="0">Não</option>
-					</form:select></td>
-			</tr>
+							<tr>
+								<td><form:input path="taxa" id="taxa" required="required"
+										placeholder="Taxa de Conversão" /></td>
+							</tr>
 
-			<tr>
-				<td><label for="taxa">Taxa: </label></td>
-				<td><form:input path="taxa" id="taxa" required="required" /></td>
-			</tr>
-
-			<tr id="tringrediente">
-				<td><label for="ingrediente">Ingrediente: </label></td>
-				<td><form:select path="ingrediente" id="ingrediente">
-						<form:option value="" selected="true">&nbsp;</form:option>
-						<form:options items="${todosIngredientes}" itemLabel="nome"
-							itemValue="id" />
-					</form:select></td>
-			</tr>
-			<tr>
-				<td colspan="3"><c:choose>
-						<c:when test="${editar}">
-							<input type="submit" value="Atualizar" />
-						</c:when>
-						<c:otherwise>
-							<input type="submit" value="Registrar" />
-						</c:otherwise>
-					</c:choose></td>
-			</tr>
-		</table>
-	</form:form>
+							<tr id="tringrediente">
+								<td><form:select path="ingrediente" id="ingrediente">
+										<option value="" disabled>Ingrediente</option>
+										<form:option value="" selected="true">&nbsp;</form:option>
+										<form:options items="${todosIngredientes}" itemLabel="nome"
+											itemValue="id" />
+									</form:select></td>
+							</tr>
+							<tr>
+								<td colspan="3"><c:choose>
+										<c:when test="${editar}">
+											<input type="submit" value="Atualizar" id="enviar" />
+										</c:when>
+										<c:otherwise>
+											<input type="submit" value="Registrar" id="enviar" />
+										</c:otherwise>
+									</c:choose></td>
+							</tr>
+						</table>
+					</form:form>
+				</div>
+			</div>
+		</div>
+	</div>
 	<br />
-	<br /> Voltar para
-	<a href="<c:url value='/conversor/listar' />">Lista de Conversores</a>
+	<br />
+	<a id="btnVoltar" href="<c:url value='/conversor/listar' />">Voltar</a>
 </body>
 </html>

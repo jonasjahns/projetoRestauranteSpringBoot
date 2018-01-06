@@ -8,10 +8,10 @@
 </head>
 
 <body>
-	<div id="mainWrapper">
-		<div class="login-container">
-			<div class="login-card">
-				<div class="login-form">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body">
+				<div class="well">
 					<c:url var="loginUrl" value="/login" />
 					<form action="${loginUrl}" method="post" class="form-horizontal">
 						<c:if test="${param.error != null}">
@@ -24,7 +24,7 @@
 								<p>Conectado</p>
 							</div>
 						</c:if>
-						<div class="input-group input-sm">
+						<div class="input-group">
 							<label class="input-group-addon" for="username"><i
 								class="fa fa-user"></i></label> <input type="text" class="form-control"
 								id="username" name="ssoId" placeholder="Usuário" required>
@@ -53,6 +53,5 @@
 			</div>
 		</div>
 	</div>
-
 </body>
 </html>

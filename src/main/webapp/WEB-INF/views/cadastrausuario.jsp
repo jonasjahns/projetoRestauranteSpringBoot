@@ -11,119 +11,62 @@
 </head>
 
 <body>
-	<div class="generic-container">
-		<%@include file="parts/authheader.jsp"%>
+	<%@include file="parts/authheader.jsp"%>
 
-		<div class="well lead">User Registration Form</div>
-		<form:form method="POST" modelAttribute="user" class="form-horizontal">
-			<form:input type="hidden" path="id" id="id" />
+	<div class="container-fluid">
+		<div id="divRow">
+			<div id="divCol">
+				<div id="divForm">
+					<br> <br>
+					<form:form method="POST" modelAttribute="user"
+						class="form-horizontal">
+						<form:input type="hidden" path="id" id="id" />
 
-			<div class="row">
-				<div class="form-group col-md-12">
-					<label class="col-md-3 control-lable" for="firstName">First
-						Name</label>
-					<div class="col-md-7">
-						<form:input type="text" path="firstName" id="firstName"
-							class="form-control input-sm" />
-						<div class="has-error">
-							<form:errors path="firstName" class="help-inline" />
-						</div>
-					</div>
+						<table>
+							<tr>
+								<td><h3>Cadastrar Usuário</h3></td>
+							</tr>
+							<tr>
+								<td><form:input type="text" path="firstName" id="firstName"
+										placeholder="Nome" /></td>
+							</tr>
+							<tr>
+								<td><form:input type="text" path="lastName" id="lastName"
+										placeholder="Sobrenome" /></td>
+							</tr>
+							<tr>
+								<td><form:input type="text" path="Cpf" id="Cpf"
+										placeholder="CPF" /></td>
+							</tr>
+							<tr>
+								<td><form:input type="password" path="password"
+										id="password" placeholder="Senha" /></td>
+							</tr>
+							<tr>
+								<td><form:input type="text" path="email" id="email"
+										placeholder="Email" /></td>
+							</tr>
+							<tr>
+								<td><form:select path="usuarioProfile" items="${roles}"
+										multiple="true" itemValue="id" itemLabel="tipo"
+										class="form-control input-sm" /></td>
+							</tr>
+							<tr>
+								<td><c:choose>
+										<c:when test="${edit}">
+											<input type="submit" value="Atualizar" id="enviar" />
+										</c:when>
+										<c:otherwise>
+											<input type="submit" value="Registrar" id="enviar" />
+										</c:otherwise>
+									</c:choose></td>
+							</tr>
+						</table>
+					</form:form>
 				</div>
 			</div>
-
-			<div class="row">
-				<div class="form-group col-md-12">
-					<label class="col-md-3 control-lable" for="lastName">Last
-						Name</label>
-					<div class="col-md-7">
-						<form:input type="text" path="lastName" id="lastName"
-							class="form-control input-sm" />
-						<div class="has-error">
-							<form:errors path="lastName" class="help-inline" />
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="form-group col-md-12">
-					<label class="col-md-3 control-lable" for="Cpf">CPF</label>
-					<div class="col-md-7">
-						<c:choose>
-							<c:when test="${edit}">
-								<form:input type="text" path="Cpf" id="Cpf"
-									class="form-control input-sm" disabled="true" />
-							</c:when>
-							<c:otherwise>
-								<form:input type="text" path="Cpf" id="Cpf"
-									class="form-control input-sm" />
-								<div class="has-error">
-									<form:errors path="Cpf" class="help-inline" />
-								</div>
-							</c:otherwise>
-						</c:choose>
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="form-group col-md-12">
-					<label class="col-md-3 control-lable" for="password">Password</label>
-					<div class="col-md-7">
-						<form:input type="password" path="password" id="password"
-							class="form-control input-sm" />
-						<div class="has-error">
-							<form:errors path="password" class="help-inline" />
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="form-group col-md-12">
-					<label class="col-md-3 control-lable" for="email">Email</label>
-					<div class="col-md-7">
-						<form:input type="text" path="email" id="email"
-							class="form-control input-sm" />
-						<div class="has-error">
-							<form:errors path="email" class="help-inline" />
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="form-group col-md-12">
-					<label class="col-md-3 control-lable" for="userProfiles">Roles</label>
-					<div class="col-md-7">
-						<form:select path="usuarioProfile" items="${roles}"
-							multiple="true" itemValue="id" itemLabel="tipo"
-							class="form-control input-sm" />
-						<div class="has-error">
-							<form:errors path="usuarioProfile" class="help-inline" />
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="form-actions floatRight">
-					<c:choose>
-						<c:when test="${edit}">
-							<input type="submit" value="Update"
-								class="btn btn-primary btn-sm" /> or <a
-								href="<c:url value='/usuario/listar' />">Cancel</a>
-						</c:when>
-						<c:otherwise>
-							<input type="submit" value="Register"
-								class="btn btn-primary btn-sm" /> or <a
-								href="<c:url value='/usuario/listar' />">Cancel</a>
-						</c:otherwise>
-					</c:choose>
-				</div>
-			</div>
-		</form:form>
+		</div>
 	</div>
+	<a id="btnVoltar" href="<c:url value='/usuario/listar' />">Voltar</a>
 </body>
 </html>

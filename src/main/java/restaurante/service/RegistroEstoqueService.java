@@ -9,7 +9,9 @@ import restaurante.dao.RegistroEstoqueDao;
 import restaurante.model.Ingrediente;
 import restaurante.model.LancamentoEstoque;
 import restaurante.model.Medida;
+import restaurante.model.Pedido;
 import restaurante.model.RegistroEstoque;
+import restaurante.model.ValorPedido;
 
 @Service
 public class RegistroEstoqueService {
@@ -18,6 +20,9 @@ public class RegistroEstoqueService {
 
 	@Autowired
 	ConversorMedidasService conversorMedidasService;
+
+	@Autowired
+	TipoLancamentoEstoqueService tipoLancamentoEstoqueService;
 
 	public RegistroEstoque getById(Integer id) {
 		return registroEstoqueDao.findOne(id);
@@ -37,6 +42,18 @@ public class RegistroEstoqueService {
 
 	public List<RegistroEstoque> registroPorIngrediente(Ingrediente ingrediente) {
 		return registroEstoqueDao.findPorIngrediente(ingrediente.getId());
+	}
+
+	public void salvarReceita(Pedido pedido) {
+		for (ValorPedido valorPedido : pedido.getValores()) {
+			LancamentoEstoque lancamentoEstoque = new LancamentoEstoque();
+			lancamentoEstoque.setData(pedido.getData());
+			lancamentoEstoque.setValor(1D);
+			lancamentoEstoque.setQuantidade((new Double(valorPedido.getValor())));
+			lancamentoEstoque.setTipo(tipoLancamentoEstoqueService.getByCodigo(52));
+			this.adicionarLancamento(lancamentoEstoque, valorPedido.getIngrediente(), valorPedido.getMedida());
+
+		}
 	}
 
 	public void adicionarLancamento(LancamentoEstoque lancamentoEstoque, Ingrediente ingrediente, Medida medida) {

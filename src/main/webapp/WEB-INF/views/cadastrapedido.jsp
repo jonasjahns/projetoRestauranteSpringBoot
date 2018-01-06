@@ -5,7 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<%@ include file="parts/header.jsp"%>
+<%@ include file="parts/header2.jsp"%>
 <script>
 	jQuery(document).ready(function() {
 		jQuery('.radio').on('click', function() {
