@@ -10,15 +10,14 @@
 			<div class="card-block">
 				<span class="lead">Lista de Receitas</span>
 			</div>
-			<div class="">
+			<div class="table-responsive">
 				<table class="table table-hover">
 					<thead class="thead-inverse">
 						<tr>
 							<th>Receita</th>
 							<th>Grupos</th>
-							<sec:authorize access="hasRole('ADMIN')">
-								<th width="80"></th>
-							</sec:authorize>
+							<th></th>
+							<th></th>
 						</tr>
 					</thead>
 					<c:forEach items="${receitas}" var="receita">
@@ -29,26 +28,19 @@
 										items="${receita.receitaGrupos}" var="receitaGrupo">
 										<option value="${receitaGrupo.id}">${receitaGrupo.grupo.nome}</option>
 									</c:forEach></select></td>
-							<sec:authorize access="hasRole('ADMIN')">
-								<td><a
-									href="<c:url value='/receita/deletar-${receita.id}' />"
-									class="btn btn-danger w-80 float-right ml-1">Deletar</a> <a
-									href="<c:url value='/receita/editar-${receita.id}' />"
-									class="btn btn-success w-80 float-right ml-1">Editar</a></td>
-							</sec:authorize>
+							<td><a
+								href="<c:url value='/receita/editar-${receita.id}' />"
+								class="btn btn-success w-80 float-right ml-1">Editar</a></td>
+							<td><a
+								href="<c:url value='/receita/deletar-${receita.id}' />"
+								class="btn btn-danger w-80 float-right ml-1">Deletar</a></td>
 						</tr>
 					</c:forEach>
 				</table>
 			</div>
 		</div>
-		<div class="col-3 p-1">
-			<sec:authorize access="hasRole('ADMIN')">
-				<a class="btn btn-primary col-sm-4 "
-					href="<c:url value='/receita/nova' />"><strong>Nova</strong></a>
-			</sec:authorize>
-			<a class=" font-weight-bold btn btn-secondary col-sm-4 "
-				href="<c:url value='/cadastros/' />"><strong>Voltar</strong></a>
-		</div>
+		<a id="btnNovo" href="<c:url value='/receita/nova' />"><strong>Nova</strong></a>
+		<a id="btnVoltarLista" href="<c:url value='/cadastros/' />"><strong>Voltar</strong></a>
 	</div>
 </body>
 </html>

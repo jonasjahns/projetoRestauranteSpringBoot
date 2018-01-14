@@ -10,7 +10,7 @@
 			<div class="card-block">
 				<span class="lead">Lista de Usuários</span>
 			</div>
-			<div class="">
+			<div class="table-responsive">
 				<table class="table table-hover">
 					<thead class="thead-inverse">
 						<tr>
@@ -19,9 +19,8 @@
 							<th>Email</th>
 							<th>CPF</th>
 							<th>Tipo</th>
-							<sec:authorize access="hasRole('ADMIN')">
-								<th class="w-80"></th>
-							</sec:authorize>
+							<th></th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -34,30 +33,19 @@
 								<c:forEach items="${user.usuarioProfile}" var="profile">
 									<td>${profile.tipo}</td>
 								</c:forEach>
-								<sec:authorize access="hasRole('ADMIN')">
-									<td><a
-										href="<c:url value='/usuario/deletar/${user.cpf}' />"
-										class="btn btn-danger w-80 float-right ml-1">Deletar</a> <a
-										href="<c:url value='/usuario/editar/${user.cpf}' />"
-										class="btn btn-success w-80 float-right ml-1">Editar</a></td>
-								</sec:authorize>
+								<td><a href="<c:url value='/usuario/editar/${user.cpf}' />"
+									class="btn btn-success w-80 float-right ml-1">Editar</a></td>
+								<td><a
+									href="<c:url value='/usuario/deletar/${user.cpf}' />"
+									class="btn btn-danger w-80 float-right ml-1">Deletar</a></td>
 							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
 			</div>
 		</div>
-
-		<div class="col-sm-3">
-			<sec:authorize access="hasRole('ADMIN')">
-				<a class="btn btn-primary col-sm-4"
-					href="<c:url value='/usuario/novo' />"><strong>Novo</strong></a>
-			</sec:authorize>
-			<a class=" font-weight-bold btn btn-secondary col-sm-4 "
-				href="<c:url value='/cadastros/' />"><strong>Voltar</strong></a>
-		</div>
-
-
+		<a id="btnNovo" href="<c:url value='/usuario/novo' />"><strong>Novo</strong></a>
+		<a id="btnVoltarLista" href="<c:url value='/cadastros/' />"><strong>Voltar</strong></a>
 	</div>
 </body>
 </html>

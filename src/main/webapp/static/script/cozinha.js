@@ -13,29 +13,9 @@ function connect() {
 
 function atualizarPedido(json) {
 	var teste = JSON.parse(json);
-	alert(json);
-	alert(teste[1].nome);
-	var table = $("#pedidos-table").DataTable({
-		retrieve : true,
-		data : teste,	
-		"order" : [ [ 3, "asc" ] ],
-		"info" : false,
-		"searching" : false,
-		"lengthChange" : false,
-		"pageLength" : 15,
-		columns : [ {
-			data : 'nome'
-		}, {
-			data : 'usuario'
-		}, {
-			data : 'status'
-		}, {
-			data : 'data'
-		}, {
-			data : 'dataStatus'
-		}, {
-			data : 'botao'
-		} ]
+	var dynatable = $('#pedidos-table').data('dynatable');
+	dynatable.records.updateFromJson({
+		records : teste
 	});
-	table.clear().draw();
+	dynatable.dom.update();
 }

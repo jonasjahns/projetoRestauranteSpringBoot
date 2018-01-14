@@ -10,7 +10,7 @@
 			<div class="card-block">
 				<span class="lead">Lista de Grupos</span>
 			</div>
-			<div class="">
+			<div class="table-responsive">
 				<table class="table table-hover">
 					<thead class="thead-inverse">
 						<tr>
@@ -18,9 +18,8 @@
 							<th>Customizável</th>
 							<th>Variações</th>
 							<th>Medida</th>
-							<sec:authorize access="hasRole('ADMIN')">
-								<th width="80"></th>
-							</sec:authorize>
+							<th></th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>

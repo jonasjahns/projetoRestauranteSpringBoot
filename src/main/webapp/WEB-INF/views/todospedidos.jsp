@@ -9,12 +9,12 @@
 		<div class="card-block">
 			<span class="lead">Cardápio</span>
 		</div>
-		<div class="">
+		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead class="thead-inverse">
 					<tr>
 						<th>Prato</th>
-						<th width="80"></th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -29,12 +29,7 @@
 			</table>
 		</div>
 	</div>
-	<br />
-
-	<div class="col-3 p-1">
-		<a class=" font-weight-bold btn btn-secondary col-sm-4 "
-			href="<c:url value='/cadastros/' />"><strong>Voltar</strong></a>
-	</div>
+	<br /> <a id="btnNovo" href="<c:url value='/cadastros/' />"><strong>Voltar</strong></a>
 </div>
 </body>
 </html>

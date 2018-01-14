@@ -5,15 +5,16 @@
 <script src="/Boot/static/script/cozinha.js"></script>
 <script>
 	$(document).ready(function() {
-
-		$('#pedidos-table').DataTable({
-			"order" : [ [ 3, "asc" ] ],
-			"info" : false,
-			"searching" : false,
-			"lengthChange" : false,
-			"pageLength" : 15,
-			"ajax" : "",
+		$.dynatableSetup({
+			features : {
+				paginate : false,
+				sort : true,
+				pushState : true,
+				search : true,
+				recordCount : true,
+			}
 		});
+		$('#pedidos-table').dynatable();
 	})
 </script>
 </head>
@@ -24,7 +25,7 @@
 			<div class="card-block">
 				<span class="lead">Pedidos</span>
 			</div>
-			<div class="">
+			<div class="table-responsive">
 				<table class="table table-hover" id="pedidos-table">
 					<thead class="thead-inverse">
 						<tr>
@@ -32,8 +33,8 @@
 							<th>Cliente</th>
 							<th>Status</th>
 							<th>Hora Pedido</th>
-							<th>Última Atualização</th>
-							<th></th>
+							<th>Atualizado</th>
+							<th>Botao</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -50,20 +51,6 @@
 									href="<c:url value='/cozinha/pedido-${pedido.id}/atualizar/2' />"><strong>Preparando</strong></a></td>
 							</tr>
 						</c:forEach>
-					</tbody>
-				</table>
-				<table class="table table-hover" id="table-teste">
-					<thead class="thead-inverse">
-						<tr>
-							<th>Prato</th>
-							<th>Cliente</th>
-							<th>Status</th>
-							<th>Hora Pedido</th>
-							<th>Última Atualização</th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
 					</tbody>
 				</table>
 			</div>

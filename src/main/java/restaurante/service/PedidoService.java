@@ -85,37 +85,37 @@ public class PedidoService {
 
 	public String pedidosJsonByDate(Date data) {
 		//String separator = "\"";
-		//String json = "[";//"{" + separator + "data" + separator + ":[";
-		//String comma = ",";
-		//int i = 1;
-		DateFormat df = new SimpleDateFormat("HH:mm:ss");
-		List<Pedido> pedidos = this.findByData(data);
-		List<RegistroFilaCozinha> registros = new ArrayList<RegistroFilaCozinha>();
-		for (Pedido pedido : pedidos) {
-			//json +="[";
-			//json += separator + pedido.getReceita().getNome() + separator + comma;
-			//json += separator + pedido.getUsuario().getNomeCompleto() + separator + comma;
-			//json += separator + pedido.getNomeStatus() + separator + comma;
-			//json += separator + pedido.getDataFormatada() + separator + comma;
-			//json += separator + pedido.getUltimoStatus().getHora() + separator + comma;
-			//json += separator + "Botao" + separator;
-			//json += "]";
-			//if (i < pedidos.size())
-			//{
-				//json += comma;
-			//}
-			//i++;
-			RegistroFilaCozinha registro = new RegistroFilaCozinha();
-			registro.setNome(pedido.getReceita().getNome());
-			registro.setUsuario(pedido.getUsuario().getNomeCompleto());
-			registro.setStatus(pedido.getNomeStatus());
-			registro.setData(pedido.getDataFormatada());
-			registro.setDataStatus(df.format(pedido.getUltimoStatus().getHora()));
-			registros.add(registro);
-		}
-		//json += "]}";
-		//json +="]";
-		Gson g = new Gson();
-		return g.toJson(registros);
+				//String json = "[";//"{" + separator + "data" + separator + ":[";
+				//String comma = ",";
+				//int i = 1;
+				DateFormat df = new SimpleDateFormat("HH:mm:ss");
+				List<Pedido> pedidos = this.findByData(data);
+				List<RegistroFilaCozinha> registros = new ArrayList<RegistroFilaCozinha>();
+				for (Pedido pedido : pedidos) {
+					//json +="[";
+					//json += separator + pedido.getReceita().getNome() + separator + comma;
+					//json += separator + pedido.getUsuario().getNomeCompleto() + separator + comma;
+					//json += separator + pedido.getNomeStatus() + separator + comma;
+					//json += separator + pedido.getDataFormatada() + separator + comma;
+					//json += separator + pedido.getUltimoStatus().getHora() + separator + comma;
+					//json += separator + "Botao" + separator;
+					//json += "]";
+					//if (i < pedidos.size())
+					//{
+						//json += comma;
+					//}
+					//i++;
+					RegistroFilaCozinha registro = new RegistroFilaCozinha();
+					registro.setPrato(pedido.getReceita().getNome());
+					registro.setCliente(pedido.getUsuario().getNomeCompleto());
+					registro.setStatus(pedido.getNomeStatus());
+					registro.setHoraPedido(pedido.getDataFormatada());
+					registro.setUltimaAtualizacao(df.format(pedido.getUltimoStatus().getHora()));
+					registros.add(registro);
+				}
+				//json += "]}";
+				//json +="]";
+				Gson g = new Gson();
+				return g.toJson(registros);
 	}
 }

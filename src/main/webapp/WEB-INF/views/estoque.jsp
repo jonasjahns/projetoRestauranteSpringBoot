@@ -11,7 +11,7 @@
 	<%@include file="parts/authheader.jsp"%>
 	<h2>Lista de Registros</h2>
 	<div class="table-responsive">
-		<table class="table table-hover table-bordered">
+		<table class="table table-hover">
 			<thead class="thead-inverse">
 				<tr>
 					<th>Produto</th>
@@ -25,24 +25,21 @@
 				</tr>
 				<c:forEach items="${registrosEstoque}" var="registroEstoque">
 					<tr>
-						<td><a
-							href="<c:url value='/estoque/editar-${registroEstoque.id}' />">${registroEstoque.ingrediente.nome}</a></td>
+						<td>${registroEstoque.ingrediente.nome}</td>
 						<td>${registroEstoque.medida.nome}</td>
 						<td>${registroEstoque.quantidadeComprada}</td>
 						<td>${registroEstoque.disponiveis}</td>
 						<td>${registroEstoque.valor}</td>
 						<td>${registroEstoque.dataValidade}</td>
-						<td><a
+						<td><a class="btn btn-success w-80  ml-1"
 							href="<c:url value='/estoque/lancamentos-${registroEstoque.id}' />">Listar</a></td>
-						<td><a
+						<td><a class="btn btn-danger w-80 ml-1"
 							href="<c:url value='/estoque/deletar-${registroEstoque.id}' />">deletar</a></td>
 					</tr>
 				</c:forEach>
 		</table>
 	</div>
-	<br />
-	<a href="<c:url value='/estoque/novo' />">Adicionar Nova Registro</a>
-	<br />
-	<a href="<c:url value='/' />">Voltar para o Início</a>
+	<a id="btnNovo" href="<c:url value='/estoque/novo' />">Novo</a>
+	<a id="btnVoltarLista" href="<c:url value='/' />">Voltar</a>
 </body>
 </html>

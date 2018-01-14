@@ -11,7 +11,7 @@
 	<%@include file="parts/authheader.jsp"%>
 	<h2>Lista de Registros</h2>
 	<div class="table-responsive">
-		<table class="table table-hover table-bordered">
+		<table class="table table-hover">
 			<thead class="thead-inverse">
 				<tr>
 					<th>Data</th>
@@ -28,6 +28,6 @@
 			</c:forEach>
 		</table>
 	</div>
-	<a href="<c:url value='/estoque/listar' />">Voltar</a>
+	<a id="btnVoltarLista" href="<c:url value='/estoque/listar' />">Voltar</a>
 </body>
 </html>

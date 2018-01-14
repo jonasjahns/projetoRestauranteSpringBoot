@@ -1,6 +1,8 @@
 <nav
 	class="navbar navbar-toggleable-md navbar-light navbar-inverse bg-inverse">
-	<a class="navbar-brand" href="<c:url value="/" />">Módulos</a>
+	<div class="navbar-header">
+		<a class="navbar-brand" href="<c:url value="/" />">Módulos</a>
+	</div>	
 	<div class="collapse navbar-collapse ml-auto">
 		<ul class="navbar-nav ml-auto navbar-inverse">
 			<li class="nav-item p-3"><a><i

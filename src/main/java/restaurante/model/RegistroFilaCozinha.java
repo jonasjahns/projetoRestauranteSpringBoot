@@ -1,67 +1,64 @@
 package restaurante.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class RegistroFilaCozinha {
 
-	public String nome;
+	public String prato;
 
-	public String usuario;
+	public String cliente;
 
 	public String status;
 
-	public String data;
+	public String horaPedido;
 
-	public String dataStatus;
+	@SerializedName("atualizado")
+	public String ultimaAtualizacao;
 
 	public final String botao = "botao";
 
-	public String getNome() {
-		return nome;
+	public String getPrato() {
+		return prato;
 	}
 
-	public String getUsuario() {
-		return usuario;
+	public String getCliente() {
+		return cliente;
 	}
 
 	public String getStatus() {
 		return status;
 	}
 
-	public String getData() {
-		return data;
+	public String getHoraPedido() {
+		return horaPedido;
 	}
 
-	public String getDataStatus() {
-		return dataStatus;
+	public String getUltimaAtualizacao() {
+		return ultimaAtualizacao;
 	}
 
 	public String getBotao() {
 		return botao;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setPrato(String prato) {
+		this.prato = prato;
 	}
 
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
+	public void setCliente(String cliente) {
+		this.cliente = cliente;
 	}
 
 	public void setStatus(String status) {
 		this.status = status;
 	}
 
-	public void setData(String data) {
-		this.data = data;
+	public void setHoraPedido(String horaPedido) {
+		this.horaPedido = horaPedido;
 	}
 
-	public void setDataStatus(String dataStatus) {
-		this.dataStatus = dataStatus;
-	}
-
-	@Override
-	public String toString() {
-		return "RegistroFilaCozinha [nome=" + nome + ", usuario=" + usuario + ", status=" + status + ", data=" + data
-				+ ", dataStatus=" + dataStatus + ", botao=" + botao + "]";
+	public void setUltimaAtualizacao(String ultimaAtualizacao) {
+		this.ultimaAtualizacao = ultimaAtualizacao;
 	}
 
 }

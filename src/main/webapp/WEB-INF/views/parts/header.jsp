@@ -36,6 +36,14 @@
 
 <script type="text/javascript" src="/Boot/static/script/app.js"></script>
 
+<link rel="stylesheet" type="text/css"
+	href="/Boot/static/style/jquery.dynatable.css" />
+
+<script type="text/javascript"
+	src="/Boot/static/script/jquery.dynatable.js"></script>
+
+<script type="text/javascript" src="/Boot/static/script/popper.min.js"></script>
+
 <script>
 	$(document).ready(function() {
 		setFormulario();
